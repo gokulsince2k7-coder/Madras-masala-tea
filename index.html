@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madras Masala Tea — Kovilpatti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Josefin+Sans:wght@300;400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --saffron: #E8721A;
+  --deep-saffron: #C45A0A;
+  --turmeric: #D4A017;
+  --chai: #6B3A2A;
+  --dark-chai: #3D1F14;
+  --cream: #FDF6EC;
+  --warm-white: #FBF4E8;
+  --linen: #EDE0CC;
+  --cardamom: #8B6F5E;
+  --steam: rgba(253,246,236,0.08);
+  --ink: #1A0E06;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background: var(--dark-chai);
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9990;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 28px 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: all 0.5s ease;
+}
+nav.scrolled {
+  background: rgba(61,31,20,0.96);
+  backdrop-filter: blur(16px);
+  padding: 18px 64px;
+  border-bottom: 1px solid rgba(232,114,26,0.18);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.3);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  text-decoration: none;
+  display: flex; flex-direction: column; line-height: 1.1;
+}
+.nav-logo .sub { font-size: 9px; letter-spacing: 0.28em; color: var(--saffron); font-family: 'Josefin Sans', sans-serif; font-weight: 300; text-transform: uppercase; margin-top: 2px; }
+.nav-links {
+  display: flex; gap: 36px; list-style: none; align-items: center;
+}
+.nav-links a {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--linen); text-decoration: none; font-weight: 400;
+  position: relative; padding-bottom: 3px;
+  transition: color 0.3s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--saffron);
+  transition: width 0.4s cubic-bezier(.25,.46,.45,.94);
+}
+.nav-links a:hover { color: var(--saffron); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  border: 1px solid var(--saffron) !important;
+  color: var(--saffron) !important;
+  padding: 9px 22px !important;
+  transition: all 0.3s !important;
+}
+.nav-cta:hover { background: var(--saffron) !important; color: var(--dark-chai) !important; }
+.nav-cta::after { display: none !important; }
+
+/* PAGE SECTIONS */
+.page { min-height: 100vh; }
+
+/* ============ PAGE 1 — HOME ============ */
+#home {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 0 10vw;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.home-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 70% 40%, rgba(232,114,26,0.12) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 60% at 20% 80%, rgba(107,58,42,0.4) 0%, transparent 60%),
+              var(--dark-chai);
+}
+/* Decorative kolam-inspired circle */
+.home-circle {
+  position: absolute; right: 6vw; top: 50%; transform: translateY(-50%);
+  width: 480px; height: 480px; pointer-events: none;
+}
+.home-circle svg { width: 100%; height: 100%; }
+
+/* Steam animation */
+.steam-wrap {
+  position: absolute; right: calc(6vw + 160px); top: 50%; transform: translateY(-130px);
+  pointer-events: none;
+}
+.steam-line {
+  width: 3px; height: 60px;
+  background: linear-gradient(to top, transparent, rgba(253,246,236,0.4), transparent);
+  border-radius: 2px;
+  animation: steamRise 2.5s ease-in-out infinite;
+  display: inline-block; margin: 0 6px;
+}
+.steam-line:nth-child(2) { animation-delay: 0.5s; height: 80px; }
+.steam-line:nth-child(3) { animation-delay: 1s; height: 50px; }
+@keyframes steamRise {
+  0% { transform: translateY(0) scaleX(1); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(-80px) scaleX(1.4) skewX(8deg); opacity: 0; }
+}
+
+.home-content { position: relative; z-index: 2; max-width: 580px; }
+.home-eyebrow {
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--saffron); font-weight: 300; margin-bottom: 24px;
+  opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  display: flex; align-items: center; gap: 14px;
+}
+.home-eyebrow::before {
+  content: ''; display: block; width: 40px; height: 1px; background: var(--saffron);
+}
+.home-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(62px, 7vw, 96px);
+  font-weight: 300; line-height: 0.95; color: var(--cream);
+  opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+}
+.home-title em { font-style: italic; color: var(--saffron); display: block; }
+.home-title span { display: block; font-size: 0.55em; letter-spacing: 0.1em; color: var(--linen); font-weight: 300; margin-top: 8px; }
+.home-tagline {
+  margin-top: 28px; font-size: 14px; line-height: 1.8; color: var(--cardamom);
+  max-width: 400px; font-weight: 300; letter-spacing: 0.04em;
+  opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+}
+.home-btns {
+  margin-top: 48px; display: flex; gap: 18px; align-items: center;
+  opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+}
+.btn-primary {
+  background: var(--saffron); color: var(--dark-chai);
+  padding: 15px 36px; font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; font-weight: 600; text-decoration: none;
+  transition: all 0.35s; display: inline-block;
+}
+.btn-primary:hover { background: var(--deep-saffron); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,114,26,0.35); }
+.btn-ghost {
+  border: 1px solid rgba(253,246,236,0.3); color: var(--linen);
+  padding: 14px 34px; font-size: 11px; letter-spacing: 0.22em;
+  text-transform: uppercase; text-decoration: none; font-weight: 400;
+  transition: all 0.35s; display: inline-block;
+}
+.btn-ghost:hover { border-color: var(--saffron); color: var(--saffron); }
+.home-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cardamom);
+  opacity: 0; animation: fadeUp 1s 1.4s forwards;
+}
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--saffron), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(1.3); opacity: 1; }
+}
+
+/* ADDRESS STRIP */
+.address-strip {
+  position: absolute; bottom: 0; right: 0;
+  background: rgba(232,114,26,0.12); border-left: 1px solid rgba(232,114,26,0.2);
+  padding: 20px 32px; font-size: 11px; letter-spacing: 0.12em;
+  color: var(--cardamom); text-align: right;
+  opacity: 0; animation: fadeIn 1s 1.2s forwards;
+}
+.address-strip strong { display: block; color: var(--saffron); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 6px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============ PAGE 2 — ABOUT ============ */
+#about {
+  background: var(--cream); color: var(--ink);
+  padding: 120px 10vw;
+  position: relative; overflow: hidden;
+}
+#about::before {
+  content: '';
+  position: absolute; top: -1px; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--saffron), var(--turmeric), var(--saffron));
+}
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+}
+.about-visual {
+  position: relative;
+}
+.about-img-frame {
+  width: 100%; aspect-ratio: 3/4; overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #8B4513 0%, #C4621A 40%, #6B3A2A 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.about-img-frame::after {
+  content: ''; position: absolute; inset: 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  pointer-events: none;
+}
+.about-cup-svg { width: 200px; opacity: 0.7; }
+.about-badge {
+  position: absolute; bottom: -24px; right: -24px;
+  width: 120px; height: 120px; border-radius: 50%;
+  background: var(--saffron); color: var(--dark-chai);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  box-shadow: 0 8px 30px rgba(232,114,26,0.4);
+}
+.about-badge .num { font-size: 36px; font-weight: 600; line-height: 1; }
+.about-badge .lbl { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'Josefin Sans', sans-serif; font-weight: 400; }
+.about-text {}
+.section-label {
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--saffron); font-weight: 400; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; display: block; width: 28px; height: 1px; background: var(--saffron); }
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 4vw, 56px);
+  font-weight: 300; line-height: 1.1; color: var(--chai); margin-bottom: 28px;
+}
+.section-title em { font-style: italic; color: var(--saffron); }
+.about-text p {
+  font-size: 14px; line-height: 1.9; color: #5A3A2A;
+  margin-bottom: 18px; font-family: 'Lora', serif; font-weight: 400;
+}
+.about-values {
+  margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+.value-item {
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.value-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--saffron), var(--turmeric));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 16px;
+}
+.value-item h4 { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--chai); font-weight: 600; margin-bottom: 4px; }
+.value-item p { font-size: 12px; color: var(--cardamom); line-height: 1.6; }
+
+/* ============ PAGE 3 — MENU ============ */
+#menu {
+  background: var(--dark-chai);
+  padding: 120px 10vw;
+  position: relative;
+}
+#menu::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,114,26,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.menu-header { text-align: center; margin-bottom: 80px; }
+.menu-header .section-label { justify-content: center; color: var(--saffron); }
+.menu-header .section-label::after { display: none; }
+.menu-header .section-label::before { content: ''; display: block; width: 28px; height: 1px; background: var(--saffron); }
+.menu-header .section-title { color: var(--cream); text-align: center; }
+.menu-header .section-title em { color: var(--saffron); }
+.menu-header p { color: var(--cardamom); font-size: 14px; max-width: 480px; margin: 0 auto; line-height: 1.8; }
+
+.menu-tabs {
+  display: flex; justify-content: center; gap: 4px; margin-bottom: 60px;
+  border-bottom: 1px solid rgba(253,246,236,0.1);
+}
+.menu-tab {
+  padding: 12px 28px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cardamom); background: none; border: none;
+  position: relative; font-family: 'Josefin Sans', sans-serif; font-weight: 400;
+  transition: color 0.3s;
+}
+.menu-tab.active { color: var(--saffron); }
+.menu-tab.active::after {
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+  height: 2px; background: var(--saffron);
+}
+.menu-tab:hover { color: var(--saffron); }
+
+.menu-panel { display: none; }
+.menu-panel.active { display: grid; }
+.menu-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2px;
+}
+.menu-item {
+  background: rgba(253,246,236,0.03); padding: 32px 28px;
+  border: 1px solid rgba(253,246,236,0.06);
+  transition: all 0.4s; position: relative; overflow: hidden;
+}
+.menu-item::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 0; background: var(--saffron);
+  transition: height 0.4s;
+}
+.menu-item:hover { background: rgba(253,246,236,0.06); border-color: rgba(232,114,26,0.2); }
+.menu-item:hover::before { height: 100%; }
+.item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.item-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--cream); }
+.item-price { font-size: 16px; color: var(--saffron); font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+.item-desc { font-size: 12px; color: var(--cardamom); line-height: 1.7; letter-spacing: 0.03em; }
+.item-badge {
+  display: inline-block; margin-top: 12px; padding: 3px 10px;
+  border: 1px solid rgba(232,114,26,0.3); font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--saffron); font-weight: 400;
+}
+
+/* ============ PAGE 4 — EXPERIENCE ============ */
+#experience {
+  background: var(--warm-white); color: var(--ink);
+  padding: 120px 10vw; position: relative; overflow: hidden;
+}
+#experience::before {
+  content: '';
+  position: absolute; top: -1px; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--turmeric), var(--saffron), var(--turmeric));
+}
+.exp-header { max-width: 600px; margin-bottom: 80px; }
+.exp-header .section-title { color: var(--chai); }
+.exp-header p { font-size: 14px; color: #7A5040; line-height: 1.9; font-family: 'Lora', serif; margin-top: 20px; }
+
+.exp-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr) 1.4fr;
+  gap: 2px; margin-bottom: 80px;
+}
+.exp-card {
+  aspect-ratio: 3/4; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--chai), var(--dark-chai));
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 28px;
+  cursor: none;
+}
+.exp-card:last-child { aspect-ratio: auto; }
+.exp-card-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.6s cubic-bezier(.25,.46,.45,.94);
+}
+.exp-card:hover .exp-card-bg { transform: scale(1.05); }
+.exp-card-1 .exp-card-bg { background: linear-gradient(160deg, #8B4513 0%, #3D1F14 100%); }
+.exp-card-2 .exp-card-bg { background: linear-gradient(160deg, #5C3D2E 0%, #C4621A 100%); }
+.exp-card-3 .exp-card-bg { background: linear-gradient(160deg, #4A2C1A 0%, #8B6F5E 100%); }
+.exp-card-4 .exp-card-bg { background: linear-gradient(160deg, #E8721A 0%, #6B3A2A 100%); }
+.exp-card-emoji {
+  position: absolute; top: 28px; left: 28px;
+  font-size: 32px; z-index: 2;
+}
+.exp-card-content { position: relative; z-index: 2; }
+.exp-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--cream); margin-bottom: 6px; }
+.exp-card p { font-size: 12px; color: rgba(253,246,236,0.65); line-height: 1.6; }
+.exp-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+  z-index: 1;
+}
+
+/* TESTIMONIALS */
+.testimonials { margin-top: 80px; }
+.test-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;
+}
+.test-header .section-title { font-size: 36px; margin-bottom: 0; }
+.stars { color: var(--saffron); font-size: 18px; letter-spacing: 4px; }
+.rating-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 48px; color: var(--chai); font-weight: 300;
+}
+.rating-sub { font-size: 11px; color: var(--cardamom); letter-spacing: 0.12em; }
+
+.test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.test-card {
+  background: var(--cream); padding: 32px 28px;
+  border-left: 3px solid var(--saffron);
+  position: relative;
+}
+.test-card::before {
+  content: '\201C';
+  position: absolute; top: 16px; right: 24px;
+  font-family: 'Cormorant Garamond', serif; font-size: 72px; color: var(--linen);
+  line-height: 1; pointer-events: none;
+}
+.test-text { font-family: 'Lora', serif; font-size: 13px; line-height: 1.8; color: #5A3A2A; margin-bottom: 20px; font-style: italic; }
+.test-author { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--chai); font-weight: 600; }
+.test-stars { color: var(--saffron); font-size: 12px; margin-bottom: 12px; }
+
+/* ============ PAGE 5 — CONTACT ============ */
+#contact {
+  background: var(--dark-chai);
+  padding: 120px 10vw;
+  position: relative;
+}
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
+.contact-info {}
+.contact-info .section-title { color: var(--cream); margin-bottom: 36px; }
+.contact-info .section-title em { color: var(--saffron); }
+.contact-info p { font-size: 14px; color: var(--cardamom); line-height: 1.9; margin-bottom: 40px; font-family: 'Lora', serif; }
+
+.info-block { margin-bottom: 32px; }
+.info-block .label { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--saffron); font-weight: 400; margin-bottom: 8px; }
+.info-block .value { font-size: 15px; color: var(--linen); font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.6; }
+
+.map-frame {
+  width: 100%; aspect-ratio: 4/3;
+  background: rgba(253,246,236,0.04);
+  border: 1px solid rgba(232,114,26,0.2);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.map-frame iframe {
+  width: 100%; height: 100%; border: none; filter: sepia(0.3) contrast(1.1);
+}
+
+/* CONTACT FORM */
+.contact-form {}
+.contact-form .section-label { color: var(--saffron); }
+.form-row { margin-bottom: 24px; }
+.form-row label {
+  display: block; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--cardamom); margin-bottom: 8px;
+}
+.form-row input, .form-row textarea, .form-row select {
+  width: 100%; background: rgba(253,246,236,0.04);
+  border: 1px solid rgba(253,246,236,0.1);
+  color: var(--cream); padding: 14px 18px;
+  font-family: 'Josefin Sans', sans-serif; font-size: 13px;
+  transition: border-color 0.3s; outline: none; resize: none;
+}
+.form-row input:focus, .form-row textarea:focus, .form-row select:focus {
+  border-color: var(--saffron);
+  background: rgba(232,114,26,0.05);
+}
+.form-row textarea { height: 120px; }
+.form-row select option { background: var(--dark-chai); }
+.form-submit {
+  width: 100%; background: var(--saffron); color: var(--dark-chai);
+  padding: 16px; font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600;
+  border: none; transition: all 0.35s;
+}
+.form-submit:hover { background: var(--deep-saffron); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(232,114,26,0.35); }
+.whatsapp-cta {
+  display: none;
+  width: 100%;
+  margin-top: 16px;
+  background: #25D366;
+  color: #103223;
+  padding: 16px;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.35s, box-shadow 0.35s, background 0.35s;
+}
+.whatsapp-cta:hover {
+  background: #1ebe5d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37,211,102,0.28);
+}
+
+/* FOOTER */
+footer {
+  background: var(--ink);
+  padding: 48px 10vw;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(232,114,26,0.15);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--cream);
+  font-weight: 300; letter-spacing: 0.08em;
+}
+.footer-logo span { color: var(--saffron); font-style: italic; }
+.footer-copy { font-size: 11px; color: var(--cardamom); letter-spacing: 0.12em; }
+.footer-tagline {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 14px; color: rgba(253,246,236,0.4);
+}
+
+/* DIVIDER */
+.ornament-divider {
+  text-align: center; padding: 20px 0;
+  color: var(--saffron); font-size: 20px; letter-spacing: 12px; opacity: 0.5;
+}
+
+/* SCROLL REVEAL */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(.25,.46,.45,.94); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark-chai); }
+::-webkit-scrollbar-thumb { background: var(--saffron); border-radius: 2px; }
+
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  nav.scrolled { padding: 14px 24px; }
+  .nav-links { display: none; }
+  #home, #about, #menu, #experience, #contact { padding: 100px 6vw 60px; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  .exp-grid { grid-template-columns: 1fr 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
+  .home-circle { display: none; }
+  .steam-wrap { display: none; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .menu-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">
+    Madras Masala Tea
+    <span class="sub">Est. Kovilpatti · Tamil Nadu</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Visit Us</a></li>
+  </ul>
+</nav>
+
+<!-- ======== PAGE 1 — HOME ======== -->
+<section id="home" class="page">
+  <div class="home-bg"></div>
+
+  <!-- Decorative SVG Circle -->
+  <div class="home-circle">
+    <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="240" cy="240" r="220" stroke="rgba(232,114,26,0.12)" stroke-width="1"/>
+      <circle cx="240" cy="240" r="195" stroke="rgba(232,114,26,0.08)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="240" cy="240" r="160" stroke="rgba(232,114,26,0.15)" stroke-width="1"/>
+      <!-- Kolam-inspired petals -->
+      <g opacity="0.2">
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(0 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(45 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(90 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(135 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(180 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(225 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(270 240 240)"/>
+        <ellipse cx="240" cy="100" rx="22" ry="50" fill="none" stroke="#E8721A" stroke-width="1" transform="rotate(315 240 240)"/>
+      </g>
+      <!-- Central tea cup illustration -->
+      <g transform="translate(170, 170)" opacity="0.85">
+        <!-- Cup body -->
+        <path d="M30 40 Q28 80 40 95 Q60 110 80 110 Q100 110 120 95 Q132 80 130 40Z" fill="rgba(107,58,42,0.9)" stroke="rgba(232,114,26,0.5)" stroke-width="1.5"/>
+        <!-- Tea liquid -->
+        <path d="M38 60 Q60 70 80 68 Q100 70 122 60" fill="none" stroke="rgba(232,114,26,0.6)" stroke-width="2"/>
+        <!-- Handle -->
+        <path d="M130 55 Q155 55 155 75 Q155 95 130 90" fill="none" stroke="rgba(232,114,26,0.5)" stroke-width="2"/>
+        <!-- Saucer -->
+        <ellipse cx="80" cy="112" rx="60" ry="10" fill="rgba(107,58,42,0.7)" stroke="rgba(232,114,26,0.4)" stroke-width="1"/>
+        <!-- Steam lines -->
+        <path d="M55 35 Q52 25 55 15" stroke="rgba(253,246,236,0.3)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M80 30 Q77 18 80 8" stroke="rgba(253,246,236,0.3)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M105 35 Q102 25 105 15" stroke="rgba(253,246,236,0.3)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </g>
+      <!-- Dot marks around ring -->
+      <circle cx="240" cy="20" r="3" fill="rgba(232,114,26,0.4)"/>
+      <circle cx="420" cy="130" r="3" fill="rgba(232,114,26,0.4)" transform="rotate(60 240 240)"/>
+      <circle cx="420" cy="130" r="3" fill="rgba(232,114,26,0.4)" transform="rotate(120 240 240)"/>
+      <circle cx="240" cy="460" r="3" fill="rgba(232,114,26,0.4)"/>
+      <circle cx="420" cy="130" r="3" fill="rgba(232,114,26,0.4)" transform="rotate(240 240 240)"/>
+      <circle cx="420" cy="130" r="3" fill="rgba(232,114,26,0.4)" transform="rotate(300 240 240)"/>
+    </svg>
+  </div>
+
+  <div class="steam-wrap">
+    <span class="steam-line"></span>
+    <span class="steam-line"></span>
+    <span class="steam-line"></span>
+  </div>
+
+  <div class="home-content">
+    <div class="home-eyebrow">Kovilpatti, Tamil Nadu</div>
+    <h1 class="home-title">
+      Madras
+      <em>Masala Tea</em>
+      <span>Authentic · Aromatic · Alive</span>
+    </h1>
+    <p class="home-tagline">Brewed with tradition, served with soul. Every cup carries the warmth of Tamil Nadu — crafted from hand-picked spices, fresh ginger, and the finest teas of the region.</p>
+    <div class="home-btns">
+      <a href="#menu" class="btn-primary">Explore Menu</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+
+  <div class="address-strip">
+    <strong>Find Us</strong>
+    483 C, Kovilpatti Main Rd<br>
+    V.O.C. Nagar, Kadershan Koil<br>
+    Kovilpatti — 628502
+  </div>
+
+  <div class="home-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ======== PAGE 2 — ABOUT ======== -->
+<section id="about" class="page">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-img-frame">
+        <svg class="about-cup-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 50 Q25 130 50 170 Q90 200 150 170 Q175 130 170 50Z" fill="rgba(107,58,42,0.8)" stroke="rgba(232,114,26,0.6)" stroke-width="2"/>
+          <path d="M45 90 Q100 115 155 90" fill="none" stroke="rgba(232,114,26,0.8)" stroke-width="3"/>
+          <path d="M40 110 Q100 130 160 110" fill="none" stroke="rgba(212,160,23,0.4)" stroke-width="2"/>
+          <path d="M170 80 Q205 80 205 120 Q205 160 170 150" fill="none" stroke="rgba(232,114,26,0.6)" stroke-width="2.5"/>
+          <ellipse cx="100" cy="176" rx="75" ry="16" fill="rgba(107,58,42,0.6)" stroke="rgba(232,114,26,0.4)" stroke-width="1.5"/>
+          <!-- Steam -->
+          <path d="M65 40 Q60 20 65 5" stroke="rgba(253,246,236,0.5)" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M100 30 Q95 10 100 0" stroke="rgba(253,246,236,0.5)" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M135 40 Q130 20 135 5" stroke="rgba(253,246,236,0.5)" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- Stars / spice dots -->
+          <circle cx="80" cy="100" r="4" fill="rgba(232,114,26,0.6)"/>
+          <circle cx="100" cy="105" r="3" fill="rgba(212,160,23,0.6)"/>
+          <circle cx="120" cy="100" r="4" fill="rgba(232,114,26,0.6)"/>
+        </svg>
+      </div>
+      <div class="about-badge">
+        <span class="num">4+</span>
+        <span class="lbl">Years of Craft</span>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-label reveal">Our Story</div>
+      <h2 class="section-title reveal reveal-delay-1">A Cup Born <em>from Kovilpatti's Soul</em></h2>
+      <div class="reveal reveal-delay-2">
+        <p>Nestled on the bustling Kovilpatti Main Road, Madras Masala Tea is more than a tea stall — it's a ritual. Every morning, as the town awakens, the aroma of freshly ground cardamom and simmering ginger fills the air.</p>
+        <p>We draw on generations of Tamil Nadu tea tradition. Our masala blend is ground fresh daily — a secret combination of seven spices that has earned us a loyal following across V.O.C. Nagar and beyond.</p>
+        <p>From the first sip to the last, we believe chai should be bold, warming, and deeply personal. Come as a stranger, leave as family.</p>
+      </div>
+      <div class="about-values reveal reveal-delay-3">
+        <div class="value-item">
+          <div class="value-icon">🌿</div>
+          <div>
+            <h4>Fresh Daily</h4>
+            <p>Spices ground every morning for maximum flavour.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🫖</div>
+          <div>
+            <h4>Traditional Brew</h4>
+            <p>Slow-brewed the Tamil way, never rushed.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">⭐</div>
+          <div>
+            <h4>Community First</h4>
+            <p>Kovilpatti's favourite corner since opening day.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌶️</div>
+          <div>
+            <h4>Bold & Aromatic</h4>
+            <p>Seven-spice blend, uniquely ours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE 3 — MENU ======== -->
+<section id="menu" class="page">
+  <div class="menu-header">
+    <div class="section-label reveal">Our Offerings</div>
+    <h2 class="section-title reveal reveal-delay-1">The <em>Menu</em></h2>
+    <p class="reveal reveal-delay-2">From robust masala chai to delicate filter coffee and crispy bites — everything made with heart.</p>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="menu-tab active" onclick="switchTab(this,'teas')">Teas &amp; Chai</button>
+    <button class="menu-tab" onclick="switchTab(this,'coffee')">Coffee</button>
+    <button class="menu-tab" onclick="switchTab(this,'bites')">Snacks &amp; Bites</button>
+    <button class="menu-tab" onclick="switchTab(this,'specials')">Specials</button>
+  </div>
+
+  <!-- TEAS -->
+  <div class="menu-panel active" id="panel-teas">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="item-top">
+          <span class="item-name">Madras Masala Chai</span>
+          <span class="item-price">₹25</span>
+        </div>
+        <p class="item-desc">Our signature seven-spice blend — ginger, cardamom, cinnamon, clove, pepper, star anise, tulsi — brewed strong and served piping hot.</p>
+        <span class="item-badge">Signature</span>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="item-top">
+          <span class="item-name">Ginger Lemon Tea</span>
+          <span class="item-price">₹20</span>
+        </div>
+        <p class="item-desc">Bold ginger decoction brightened with fresh lemon juice. Light, cleansing, and powerfully refreshing.</p>
+      </div>
+      <div class="menu-item reveal reveal-delay-2">
+        <div class="item-top">
+          <span class="item-name">Elaichi Chai</span>
+          <span class="item-price">₹22</span>
+        </div>
+        <p class="item-desc">Pure green cardamom pods crushed into CTC tea with farm-fresh milk. Aromatic elegance in a steel tumbler.</p>
+      </div>
+      <div class="menu-item reveal reveal-delay-3">
+        <div class="item-top">
+          <span class="item-name">Cutting Chai</span>
+          <span class="item-price">₹15</span>
+        </div>
+        <p class="item-desc">Half-cup, full flavour. The traditional roadside half-serve — strong, dark, and impossibly satisfying.</p>
+      </div>
+      <div class="menu-item reveal">
+        <div class="item-top">
+          <span class="item-name">Sulaimani Tea</span>
+          <span class="item-price">₹30</span>
+        </div>
+        <p class="item-desc">Malabar-inspired black tea with lemon, mint, and saffron. Spiced for digestion, loved for its depth.</p>
+        <span class="item-badge">Special</span>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="item-top">
+          <span class="item-name">Tulsi Kadha</span>
+          <span class="item-price">₹28</span>
+        </div>
+        <p class="item-desc">Sacred basil, clove, black pepper and honey decoction. Ancient remedy, modern comfort.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COFFEE -->
+  <div class="menu-panel" id="panel-coffee">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="item-top">
+          <span class="item-name">Filter Coffee</span>
+          <span class="item-price">₹30</span>
+        </div>
+        <p class="item-desc">Authentic Tamil Nadu filter coffee with chicory, decoction-brewed and served frothy in a traditional davara-tumbler set.</p>
+        <span class="item-badge">Heritage</span>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="item-top">
+          <span class="item-name">Strong Black Coffee</span>
+          <span class="item-price">₹25</span>
+        </div>
+        <p class="item-desc">Pure dark roast, no frills. For those who take their mornings seriously.</p>
+      </div>
+      <div class="menu-item reveal reveal-delay-2">
+        <div class="item-top">
+          <span class="item-name">Milky Coffee</span>
+          <span class="item-price">₹35</span>
+        </div>
+        <p class="item-desc">Rich, creamy and mildly sweet — the way grandmothers made it, with fresh whole milk.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BITES -->
+  <div class="menu-panel" id="panel-bites">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="item-top">
+          <span class="item-name">Kara Bun</span>
+          <span class="item-price">₹15</span>
+        </div>
+        <p class="item-desc">Soft buns smeared with spiced butter and red chutney. The perfect chai companion.</p>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="item-top">
+          <span class="item-name">Murukku</span>
+          <span class="item-price">₹10</span>
+        </div>
+        <p class="item-desc">Hand-pressed rice flour spirals, deep-fried to a golden crisp. Classic Tamil teatime snack.</p>
+      </div>
+      <div class="menu-item reveal reveal-delay-2">
+        <div class="item-top">
+          <span class="item-name">Masala Vada</span>
+          <span class="item-price">₹20</span>
+        </div>
+        <p class="item-desc">Chana dal patties with onion, curry leaf and green chilli. Served fresh off the kadai.</p>
+        <span class="item-badge">Hot &amp; Fresh</span>
+      </div>
+      <div class="menu-item reveal reveal-delay-3">
+        <div class="item-top">
+          <span class="item-name">Banana Bajji</span>
+          <span class="item-price">₹12</span>
+        </div>
+        <p class="item-desc">Sweet nendram banana slices in spiced gram flour batter, fried and served with coconut chutney.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECIALS -->
+  <div class="menu-panel" id="panel-specials">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="item-top">
+          <span class="item-name">Ragi Malt Tea</span>
+          <span class="item-price">₹35</span>
+        </div>
+        <p class="item-desc">Finger millet malt blended into spiced chai. Nourishing, filling, and distinctly South Indian.</p>
+        <span class="item-badge">Chef's Favourite</span>
+      </div>
+      <div class="menu-item reveal reveal-delay-1">
+        <div class="item-top">
+          <span class="item-name">Kashmiri Kehwa</span>
+          <span class="item-price">₹45</span>
+        </div>
+        <p class="item-desc">Green tea infused with cinnamon, saffron, cardamom and crushed almonds. An elevated chai experience.</p>
+        <span class="item-badge">Premium</span>
+      </div>
+      <div class="menu-item reveal reveal-delay-2">
+        <div class="item-top">
+          <span class="item-name">Jaggery Chai</span>
+          <span class="item-price">₹28</span>
+        </div>
+        <p class="item-desc">Traditional Nattukotai Chettinad recipe — strong tea sweetened with palm jaggery instead of sugar for an earthy sweetness.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE 4 — EXPERIENCE ======== -->
+<section id="experience" class="page">
+  <div class="exp-header">
+    <div class="section-label reveal">Why We're Different</div>
+    <h2 class="section-title reveal reveal-delay-1">The <em>Madras Masala</em> Experience</h2>
+    <p class="reveal reveal-delay-2">We are not just a tea stall. We are a corner of Kovilpatti where time slows down, conversations flow, and every cup feels like a small celebration of Tamil life.</p>
+  </div>
+
+  <div class="exp-grid reveal">
+    <div class="exp-card exp-card-1">
+      <div class="exp-card-bg"></div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-emoji">🌅</div>
+      <div class="exp-card-content">
+        <h3>Morning Ritual</h3>
+        <p>Open from 6 AM. Start your day the Tamil way.</p>
+      </div>
+    </div>
+    <div class="exp-card exp-card-2">
+      <div class="exp-card-bg"></div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-emoji">🫙</div>
+      <div class="exp-card-content">
+        <h3>Fresh Spices</h3>
+        <p>Ground daily. Never from a packet.</p>
+      </div>
+    </div>
+    <div class="exp-card exp-card-3">
+      <div class="exp-card-bg"></div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-emoji">🏺</div>
+      <div class="exp-card-content">
+        <h3>Kulhar Served</h3>
+        <p>Clay cups for select teas — earthy and authentic.</p>
+      </div>
+    </div>
+    <div class="exp-card exp-card-4" style="aspect-ratio:auto; padding:40px 36px;">
+      <div class="exp-card-bg"></div>
+      <div class="exp-card-overlay"></div>
+      <div class="exp-card-emoji">🤝</div>
+      <div class="exp-card-content">
+        <h3>Community Corner</h3>
+        <p>For decades, this corner has been where Kovilpatti comes to unwind, debate, and connect. Pull up a chair — you're welcome here.</p>
+        <br>
+        <a href="#contact" class="btn-ghost" style="font-size:10px; padding:10px 20px; display:inline-block; margin-top:16px;">Visit Today</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament-divider">✦ ✦ ✦</div>
+
+  <!-- TESTIMONIALS -->
+  <div class="testimonials">
+    <div class="test-header reveal">
+      <div>
+        <div class="section-label">What Guests Say</div>
+        <h3 class="section-title" style="font-size:36px; color:var(--chai); margin-bottom:0;">Guest <em>Reviews</em></h3>
+      </div>
+      <div style="text-align:right;">
+        <div class="rating-num">3.7</div>
+        <div class="stars">★★★★</div>
+        <div class="rating-sub">Google Reviews · Kovilpatti</div>
+      </div>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">Best masala chai in all of Kovilpatti! The spice blend is unlike anything I've had anywhere else. I stop here every single morning on my way to work.</p>
+        <div class="test-author">— Murugan R., Local Regular</div>
+      </div>
+      <div class="test-card reveal reveal-delay-1">
+        <div class="test-stars">★★★★☆</div>
+        <p class="test-text">Simple, authentic, and incredibly affordable. The cutting chai with masala vada is an unbeatable combination. Very friendly staff too.</p>
+        <div class="test-author">— Priya Selvi, Kovilpatti</div>
+      </div>
+      <div class="test-card reveal reveal-delay-2">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">I was passing through on NH44 and decided to stop. The filter coffee is legitimately the best I've had outside of Madurai. Will always stop here now.</p>
+        <div class="test-author">— Karthik Sundaram, Traveller</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PAGE 5 — CONTACT ======== -->
+<section id="contact" class="page">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-label reveal">Find Us</div>
+      <h2 class="section-title reveal reveal-delay-1">Come for <em>a Cup</em></h2>
+      <p class="reveal reveal-delay-2">We're on the main road — you can't miss the aroma. Step in, take your time, let the chai do the rest.</p>
+
+      <div class="info-block reveal reveal-delay-2">
+        <div class="label">Address</div>
+        <div class="value">483 C, Kovilpatti Main Road<br>V.O.C. Nagar, Kadershan Koil<br>Kovilpatti, Tamil Nadu — 628502</div>
+      </div>
+      <div class="info-block reveal reveal-delay-3">
+        <div class="label">Hours</div>
+        <div class="value">Monday – Saturday: 6:00 AM – 10:00 PM<br>Sunday: 6:00 AM – 12:00 PM</div>
+      </div>
+      <div class="info-block reveal reveal-delay-4">
+        <div class="label">Neighbourhood</div>
+        <div class="value">V.O.C. Nagar · Near Kadershan Koil<br>Kovilpatti Thoothukudi District</div>
+      </div>
+
+      <div class="map-frame reveal" style="margin-top:32px;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3936.4949!2d77.8668!3d9.1688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06b300283a30a1:0x52f1e163eb5fac72!2sMadras+Masala+Tea!5e0!3m2!1sen!2sin!4v1"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="section-label reveal">Send a Message</div>
+      <h3 class="section-title reveal reveal-delay-1" style="color:var(--cream); font-size:36px; margin-bottom:36px;">We'd Love <em>to Hear You</em></h3>
+      <div class="form-row reveal reveal-delay-1">
+        <label>Your Name</label>
+        <input type="text" placeholder="Enter your name">
+      </div>
+      <div class="form-row reveal reveal-delay-2">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div class="form-row reveal reveal-delay-3">
+        <label>Reason for Visit</label>
+        <select>
+          <option>Daily chai customer</option>
+          <option>Large order / bulk tea</option>
+          <option>Event catering inquiry</option>
+          <option>Franchise / partnership</option>
+          <option>Just to say hello!</option>
+        </select>
+      </div>
+      <div class="form-row reveal reveal-delay-3">
+        <label>Message</label>
+        <textarea placeholder="What's on your mind? We read every message..."></textarea>
+      </div>
+      <div class="reveal reveal-delay-4">
+        <button class="form-submit" onclick="handleSubmit(event)",>Send Message →</button>
+      </div>
+      <div id="form-success" style="display:none; margin-top:20px; padding:16px 20px; border:1px solid rgba(232,114,26,0.3); color:var(--saffron); font-size:13px; letter-spacing:0.08em;">
+        ✓ &nbsp;Message sent! We'll be in touch soon over a warm cup.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>Madras</span> Masala Tea</div>
+  <div class="footer-tagline">"Every cup tells a story of Tamil Nadu."</div>
+  <div class="footer-copy">© 2025 Madras Masala Tea · Kovilpatti</div>
+</footer>
+
+<script>
+// NAV SCROLL
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// MENU TABS
+function switchTab(btn, panel) {
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + panel).classList.add('active');
+  // Re-trigger reveal animations
+  document.querySelectorAll('#panel-' + panel + ' .reveal').forEach(el => {
+    el.classList.remove('visible');
+    setTimeout(() => el.classList.add('visible'), 80);
+  });
+}
+
+// FORM SUBMIT
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('form-success').style.display = 'block';
+  let whatsappButton = document.getElementById('whatsapp-button');
+  if (!whatsappButton) {
+    whatsappButton = document.createElement('button');
+    whatsappButton.id = 'whatsapp-button';
+    whatsappButton.className = 'whatsapp-cta';
+    whatsappButton.textContent = 'Order on WhatsApp';
+    whatsappButton.addEventListener('click', () => {
+      window.open('https://wa.me/917449077490', '_blank');
+    });
+    document.querySelector('.contact-form').appendChild(whatsappButton);
+  }
+  whatsappButton.style.display = 'block';
+}
+
+// SMOOTH NAV LINKS
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
